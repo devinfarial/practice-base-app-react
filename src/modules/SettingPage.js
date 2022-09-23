@@ -1,63 +1,63 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import productService from "../services/product-service";
+import userService from "../services/user-service";
 import { OrderList } from "primereact/orderlist";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 
-const ProductPage = () => {
-  const [products, setProducts] = useState([]);
-  const [formCreate, setFormCreate] = useState({
-    foodName: "",
-    quantity: "",
-  });
+const SettingPage = () => {
+  const [users, setUsers] = useState([]);
   const [formUpdate, setFormUpdate] = useState({
     id: "",
-    foodName: "",
-    quantity: "",
+    username: "",
+    email: "",
+  });
+  const [formCreate, setFormCreate] = useState({
+    username: "",
+    email: "",
+    password: "",
   });
 
   useEffect(() => {
-    productService.getAll().then((response) => {
-      setProducts(response.data);
+    userService.getAll().then((response) => {
+      setUsers(response.data);
     });
   }, []);
 
   function handleEdit(id) {
     // cari data di state
     // isi data ke state form
-    let data = [...products];
-    let foundData = data.find((product) => product.id === id);
+    let data = [...users];
+    let foundData = data.find((user) => user.id === id);
     setFormUpdate({
       id: id,
-      foodName: foundData.foodName,
-      quantity: foundData.quantity,
-    });
-  }
-
-  function handleCreate(e) {
-    e.preventDefault();
-    productService.createProduct(formCreate).then(() => {
-      productService.getAll().then((response) => {
-        setProducts(response.data);
-      });
+      username: foundData.username,
+      email: foundData.email,
     });
   }
 
   function handleUpdate(e) {
     e.preventDefault();
-    productService.updateProduct(formUpdate).then(() => {
-      productService.getAll().then((response) => {
-        setProducts(response.data);
+    userService.updateUser(formUpdate).then(() => {
+      userService.getAll().then((response) => {
+        setUsers(response.data);
+      });
+    });
+  }
+
+  function handleCreate(e) {
+    e.preventDefault();
+    userService.createUser(formCreate).then(() => {
+      userService.getAll().then((response) => {
+        setUsers(response.data);
       });
     });
   }
 
   function handleDelete(e) {
     e.preventDefault();
-    productService.deleteProduct(formUpdate).then(() => {
-      productService.getAll().then((response) => {
-        setProducts(response.data);
+    userService.deleteUser(formUpdate.id).then(() => {
+      userService.getAll().then((response) => {
+        setUsers(response.data);
       });
     });
   }
@@ -66,10 +66,10 @@ const ProductPage = () => {
     return (
       <div className="product-item" onClick={() => handleEdit(item.id)}>
         <div className="product-list-detail">
-          <h5 className="mb-2">{item.foodName}</h5>
+          <h5 className="mb-2">Username: {item.username}</h5>
         </div>
         <div className="product-list-action">
-          <h6 className="mb-2">Qty: {item.quantity}</h6>
+          <h6 className="mb-2">Email: {item.email}</h6>
         </div>
       </div>
     );
@@ -82,7 +82,7 @@ const ProductPage = () => {
           onSubmit={handleCreate}
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-4"
         >
-          <h1>Create Product</h1>
+          <h1>Create User</h1>
           <span className="p-float-label">
             <InputText
               className="w-full mb-3"
@@ -90,7 +90,7 @@ const ProductPage = () => {
               onChange={(e) =>
                 setFormCreate((oldState) => ({
                   ...oldState,
-                  foodName: e.target.value,
+                  username: e.target.value,
                 }))
               }
             />
@@ -101,7 +101,18 @@ const ProductPage = () => {
             onChange={(e) =>
               setFormCreate((oldState) => ({
                 ...oldState,
-                quantity: e.target.value,
+                email: e.target.value,
+              }))
+            }
+          />
+          <InputText
+            password
+            className="w-full mb-3"
+            style={{ "margin-bottom": "8px" }}
+            onChange={(e) =>
+              setFormCreate((oldState) => ({
+                ...oldState,
+                password: e.target.value,
               }))
             }
           />
@@ -120,17 +131,17 @@ const ProductPage = () => {
           <InputText
             className="w-full mb-3"
             style={{ "margin-bottom": "8px" }}
-            value={formUpdate.foodName}
+            value={formUpdate.username}
             onChange={(e) =>
               setFormUpdate((previousState) => {
-                return { ...previousState, foodName: e.target.value };
+                return { ...previousState, username: e.target.value };
               })
             }
           />
           <InputText
             className="w-full mb-3"
             style={{ "margin-bottom": "8px" }}
-            value={formUpdate.quantity}
+            value={formUpdate.email}
             onChange={(e) =>
               setFormUpdate((previousState) => {
                 return { ...previousState, quantity: e.target.value };
@@ -144,7 +155,7 @@ const ProductPage = () => {
           />
           <Button
             label="Delete"
-            onClick={handleDelete}
+              onClick={handleDelete}
             style={{ "margin-bottom": "8px" }}
             className="w-full"
           />
@@ -152,8 +163,8 @@ const ProductPage = () => {
       </div>
       <div className="card mr-12 ml-12">
         <OrderList
-          value={products}
-          header="List of Products"
+          value={users}
+          header="List of Users"
           dragdrop
           listStyle={{ height: "auto" }}
           dataKey="id"
@@ -164,4 +175,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default SettingPage;

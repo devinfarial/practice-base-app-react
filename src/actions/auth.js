@@ -52,7 +52,7 @@ import {
           type: LOGIN_SUCCESS,
           payload: { user: data },
         });
-  
+      
         return Promise.resolve();
       },
       (error) => {
