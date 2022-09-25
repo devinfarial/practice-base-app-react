@@ -66,11 +66,12 @@ const SigninPage = (props) => {
 
                 <Form onSubmit={handleLogin} ref={form}>
 
-                    <InputText className="w-full mb-3"
+                    <InputText className="mb-3 w-full"
                         onChange={onChangeUsername}
                         value={username}
                         placeholder="Username" />
-                    <InputText className="w-full mb-3"
+                    <InputText className="mt-3 w-full"
+                        type='password'
                         onChange={onChangePassword}
                         value={password}
                         placeholder="Password" />

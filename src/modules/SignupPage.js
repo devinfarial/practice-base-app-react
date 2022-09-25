@@ -25,19 +25,17 @@ export default function SignupPage() {
 
         dispatch(register(formData.username, formData.email, formData.password))
             .then(() => {
-                setTimeout(function () {
-                    toastRef.current.show({ severity: 'success', summary: 'Success Message', detail: 'Registration Success. Check your email.', life: 3000 });
-                }, 5000);
+                toastRef.current.show({ severity: 'success', summary: 'Success Message', detail: 'Registration Success. Check your email.', life: 3000 });
                 navigate("/auth/signin");
             })
             .catch(() => {
-                toastRef.current.show({ severity: 'error', summary: 'Error Message', detail:message, life: 3000 });
+                toastRef.current.show({ severity: 'error', summary: 'Error Message', detail: message, life: 3000 });
             });
     }
 
     return (
         <div className="flex justify-center w-full py-10">
-            
+
             <Toast position='top-center' ref={toastRef} />
 
             <div className="flex flex-col lg:w-1/4 mx-auto sm:w-full">
@@ -56,11 +54,11 @@ export default function SignupPage() {
                         value={formData.email}
                         onChange={e => setFormData(_c => ({ ..._c, email: e.target.value }))} />
 
-                    <InputText type='password' placeholder='Password' id="password" type="password" className="w-full mb-3"
+                    <InputText type='password' placeholder='Password' id="password" className="w-full mb-3"
                         value={formData.password}
                         onChange={e => setFormData(_c => ({ ..._c, password: e.target.value }))} />
 
-                    <InputText type='password' placeholder='Confirm Pasword' id="confirmPassword" type="password" className="w-full mb-3"
+                    <InputText type='password' placeholder='Confirm Pasword' id="confirmPassword" className="w-full mb-3"
                         value={formData.confirmPassword}
                         onChange={e => setFormData(_c => ({ ..._c, confirmPassword: e.target.value }))} />
 
