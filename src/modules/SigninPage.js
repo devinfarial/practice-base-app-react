@@ -76,14 +76,7 @@ const SigninPage = (props) => {
                         value={password}
                         placeholder="Password" />
 
-                    <div className="flex items-center justify-between mb-6">
-                        <div className="flex align-items-center">
-                            <Checkbox id="rememberme" binary className="mr-2" />
-                            <label htmlFor="rememberme">Remember me</label>
-                        </div>
-
-                        <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot your password?</a>
-                    </div>
+                
 
                     <Button label="Sign In" icon="pi pi-user" className="w-full" />
                 </Form>
